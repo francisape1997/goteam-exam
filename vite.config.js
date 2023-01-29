@@ -17,9 +17,10 @@ export default defineConfig({
     alias: {
         '@': path.resolve('resources/js')
     },
-    server: {
-        hmr: {
-            host: 'localhost',
-        },
-    }
+    // 
+    // server: {
+    //     hmr: {
+    //         host: 'localhost',
+    //     },
+    // }
 });
