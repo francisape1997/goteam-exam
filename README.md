@@ -21,7 +21,9 @@
 - Make sure to set CACHE_DRIVER to "redis" in .env
 - Lastly go to http://localhost
 
-## Testing
+### Testing
 - Create database named "testing" if not defined yet.
 - Run the test: php artisan test or sail art test
 
+### Redis
+- If you want to clear the pokemons cache you can use this command "docker exec -it container-name redis-cli FLUSHALL"
