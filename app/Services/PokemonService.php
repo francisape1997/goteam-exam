@@ -19,7 +19,7 @@ class PokemonService
      * We can implement a per page caching here
      * @var int
      */
-    private const LIMIT = 50;
+    private const LIMIT = 100;
 
     public function __construct(private CacheInterface $cacheInterface) {}
 
