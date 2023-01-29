@@ -71,25 +71,9 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-center">
-        <button
-          class="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2"
-          @click="prevPage"
-          :disabled="currentPage === 1"
-        >
-          Previous
-        </button>
-        <button
-          class="bg-blue-500 text-white px-4 py-2 rounded-lg"
-          @click="nextPage"
-          :disabled="currentPage === maxPage"
-        >
-          Next
-        </button>
-      </div>
     </div>
   </template>
-  
+
 <script>
   import { http } from '@/services/http.js';
   import { ref, computed } from 'vue';
