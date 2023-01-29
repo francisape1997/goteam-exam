@@ -69,8 +69,8 @@ export const http =
                 return error.response;
             }),
 
-    delete: (url, data, method = 'DELETE') =>
-        request(url, method, data)
+    delete: (url, method = 'DELETE') =>
+        request(url, method)
             .then((response) =>
             {
                 return response;

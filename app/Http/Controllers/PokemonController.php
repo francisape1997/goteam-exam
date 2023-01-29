@@ -8,9 +8,7 @@ use App\Http\Requests\MarkPokemonAsFavoriteRequest;
 use App\Http\Requests\MarkPokemonAsLikedRequest;
 use App\Http\Requests\MarkPokemonAsHatedRequest;
 
-use App\Http\Requests\RemovePokemonAsFavoriteRequest;
-use App\Http\Requests\RemovePokemonAsLikedRequest;
-use App\Http\Requests\RemovePokemonAsHatedRequest;
+use Illuminate\Http\Request;
 
 class PokemonController extends Controller
 {
@@ -36,23 +34,23 @@ class PokemonController extends Controller
         return response($this->pokemonService->markAsHated($request));
     }
 
-    public function removeAsFavorite(RemovePokemonAsFavoriteRequest $request)
+    public function removeAsFavorite($pokemon)
     {
-        $this->pokemonService->removeAsFavorite($request);
+        $this->pokemonService->removeAsFavorite($pokemon);
 
         return response()->noContent();
     }
 
-    public function removeAsLiked(RemovePokemonAsLikedRequest $request)
+    public function removeAsLiked($pokemon)
     {
-        $this->pokemonService->removeAsLiked($request);
+        $this->pokemonService->removeAsLiked($pokemon);
 
         return response()->noContent();
     }
 
-    public function removeAsHated(RemovePokemonAsHatedRequest $request)
+    public function removeAsHated($pokemon)
     {
-        $this->pokemonService->removeAsHated($request);
+        $this->pokemonService->removeAsHated($pokemon);
 
         return response()->noContent();
     }

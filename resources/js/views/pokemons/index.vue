@@ -151,11 +151,11 @@
         };
 
         // 
-        const markPokemonRequest = async (url, payload, action) => {
+        const markPokemonRequest = async (url, data, action) => {
             const toaster = createToaster();
 
             if (action === 'POST') {
-                const response = await http.post(`pokemon/${url}`, payload);
+                const response = await http.post(`pokemon/${url}`, data);
 
                 if (response.status === 200) {
                     toaster.show('Success', {
@@ -175,7 +175,7 @@
             }
             // Delete
             else {
-                const response = await http.delete(`pokemon/${url}`, payload);
+                const response = await http.delete(`pokemon/${url}/${data}`);
 
                 if (response.status === 204) {
                     toaster.show('Success', {
@@ -206,7 +206,7 @@
                 break;
 
                 case 'LIKED':
-                  const removeAsLiked = await markPokemonRequest('remove-as-liked', { name: pokemon.name }, 'DELETE');
+                  const removeAsLiked = await markPokemonRequest('remove-as-liked', pokemon.name, 'DELETE');
 
                   if (removeAsLiked === 204) {
                      pokemon.type.splice(pokemon.type.indexOf(type), 1);
@@ -222,7 +222,7 @@
                 break;
 
                 case 'HATED':
-                  const removeAsHated = await markPokemonRequest('remove-as-hated', { name: pokemon.name }, 'DELETE');
+                  const removeAsHated = await markPokemonRequest('remove-as-hated', pokemon.name, 'DELETE');
 
                   if (removeAsHated === 204) {
                     pokemon.type.splice(pokemon.type.indexOf(type), 1);
@@ -238,7 +238,7 @@
                 break;
 
                 case 'FAVORITED':
-                  const removeAsFavorited = await markPokemonRequest('remove-as-favorite', { name: pokemon.name }, 'DELETE');
+                  const removeAsFavorited = await markPokemonRequest('remove-as-favorite', pokemon.name, 'DELETE');
 
                   if (removeAsFavorited === 204) {
                       pokemon.type.splice(pokemon.type.indexOf(type), 1);

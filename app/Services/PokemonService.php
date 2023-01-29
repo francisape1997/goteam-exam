@@ -15,7 +15,7 @@ class PokemonService
     private const KEY = 'pokemons';
 
     /**
-     * Just for simplicity so we can get all list of pokemons.
+     * Just for simplicity.
      * We can implement a per page caching here
      * @var int
      */
@@ -65,23 +65,23 @@ class PokemonService
         ]);
     }
 
-    public function removeAsFavorite($request)
+    public function removeAsFavorite($pokemon)
     {
-        $userSelection = UserSelection::owner()->whereFavorite()->where('pokemon', $request->name)->firstOrFail();
+        $userSelection = UserSelection::owner()->whereFavorite()->where('pokemon', $pokemon)->firstOrFail();
 
         $userSelection->delete();
     }
 
-    public function removeAsLiked($request)
+    public function removeAsLiked($pokemon)
     {
-        $userSelection = UserSelection::owner()->whereLiked()->where('pokemon', $request->name)->firstOrFail();
+        $userSelection = UserSelection::owner()->whereLiked()->where('pokemon', $pokemon)->firstOrFail();
 
         $userSelection->delete();
     }
 
-    public function removeAsHated($request)
+    public function removeAsHated($pokemon)
     {
-        $userSelection = UserSelection::owner()->whereHated()->where('pokemon', $request->name)->firstOrFail();
+        $userSelection = UserSelection::owner()->whereHated()->where('pokemon', $pokemon)->firstOrFail();
 
         $userSelection->delete();
     }
@@ -103,6 +103,17 @@ class PokemonService
         }
     }
 
+    public function getRandomPokemon()
+    {
+        $pokemons = $this->list();
+
+        $results = $pokemons->results;
+
+        $names = array_column($results, 'name');
+
+        return $names[rand(0, count($names))];
+    }
+    
     /**
      * Get pokemons from the API
      */
