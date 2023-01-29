@@ -13,7 +13,13 @@ use App\Enums\MarkTypeEnum;
 class PokemonService
 {
     private const KEY = 'pokemons';
-    private const LIMIT = 2000;
+
+    /**
+     * Just for simplicity so we can get all list of pokemons.
+     * We can implement a per page caching here
+     * @var int
+     */
+    private const LIMIT = 50;
 
     public function __construct(private CacheInterface $cacheInterface) {}
 
@@ -36,7 +42,7 @@ class PokemonService
     {
         return UserSelection::create([
             'user_id' => $request->user()->id,
-            'type_id' => MarkTypeEnum::FAVORITE->value,
+            'type_id' => MarkTypeEnum::FAVORITED->value,
             'pokemon' => $request->name,
         ]);
     }
@@ -48,6 +54,36 @@ class PokemonService
             'type_id' => MarkTypeEnum::LIKED->value,
             'pokemon' => $request->name,
         ]);
+    }
+
+    public function markAsHated($request)
+    {
+        return UserSelection::create([
+            'user_id' => $request->user()->id,
+            'type_id' => MarkTypeEnum::HATED->value,
+            'pokemon' => $request->name,
+        ]);
+    }
+
+    public function removeAsFavorite($request)
+    {
+        $userSelection = UserSelection::owner()->whereFavorite()->where('pokemon', $request->name)->firstOrFail();
+
+        $userSelection->delete();
+    }
+
+    public function removeAsLiked($request)
+    {
+        $userSelection = UserSelection::owner()->whereLiked()->where('pokemon', $request->name)->firstOrFail();
+
+        $userSelection->delete();
+    }
+
+    public function removeAsHated($request)
+    {
+        $userSelection = UserSelection::owner()->whereHated()->where('pokemon', $request->name)->firstOrFail();
+
+        $userSelection->delete();
     }
 
     /**

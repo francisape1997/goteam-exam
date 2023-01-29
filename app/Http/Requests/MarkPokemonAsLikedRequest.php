@@ -9,6 +9,8 @@ use App\Models\UserSelection;
 
 class MarkPokemonAsLikedRequest extends FormRequest
 {
+    private const LIMIT = 3;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -19,12 +21,14 @@ class MarkPokemonAsLikedRequest extends FormRequest
         # Check if the input pokemon is valid.
         $pokemonService->validatePokemon($this->name);
 
-        $likedPokemons = UserSelection::authenticatedUser()->whereLiked()->where('pokemon', $this->name);
-
-        dd($likedPokemons->count());
-
-        if ($likedPokemons->count() > 3) {
+        $likedPokemons = UserSelection::owner()->whereLiked();
+        
+        if ($likedPokemons->count() === self::LIMIT) {
             abort(422, 'You can only like 3 pokemons');
+        }
+
+        if ($likedPokemons->where('pokemon', $this->name)->exists()) {
+            abort(422, 'You already liked this pokemon');
         }
 
         return true;

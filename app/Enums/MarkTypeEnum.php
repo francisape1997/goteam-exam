@@ -8,7 +8,7 @@ enum MarkTypeEnum : int
 {
     use BaseEnumTrait;
 
-    case FAVORITE = 1;
+    case FAVORITED = 1;
     case LIKED = 2;
     case HATED = 3;
 }
